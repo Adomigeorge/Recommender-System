@@ -91,6 +91,7 @@ It helps others discover the work and motivates future improvements!
 If you use this code in your own project or research, a small mention or citation would be greatly appreciated:
 
 This project uses code from Recommender-System by Onyango Geoge, <Adomigeorge>.
+
 GitHub: https://github.com/Adomigeorge/Recommender-System.git
 
 ## **THANK YOU, MUCH LOVE❤️!!**
