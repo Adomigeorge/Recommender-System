@@ -77,6 +77,7 @@ Try it here: **[https://adomigeorge.pythonanywhere.com](https://adomigeorge.pyth
 - 🟢 Green (≥70%): Highly similar movies
 - 🟡 Orange (40-69%): Moderately similar
 - 🔴 Red (<40%): Less similar but still relevant
+  
 Searched Movie: Always appears first with 100% similarity
 Trailer Button: White button on each card for quick YouTube access
 
