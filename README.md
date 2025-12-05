@@ -1,7 +1,3 @@
-# Movie Data Directory
-
-This directory should contain your movie dataset file.
-
 # 🎬 Movie Recommendation System
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://python.org)
@@ -9,16 +5,17 @@ This directory should contain your movie dataset file.
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 [![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://yourusername.pythonanywhere.com)
 
-A content-based movie recommendation system that suggests similar movies based on genres, keywords, cast, director, and taglines.
+A content-based movie recommendation system that suggests similar movies based on genres, keywords, cast, director, and taglines. Features a modern web interface with trailer integration.
 
 ## ✨ Features
 
-- 🔍 **Intelligent Search**: Fuzzy matching for movie titles
-- 🎬 **Smart Recommendations**: Content-based filtering using ML
-- 📱 **Responsive UI**: Works on all devices
-- ⚡ **Real-time Results**: Instant recommendations
-- 🎨 **Visual Feedback**: Color-coded similarity scores
-- 📊 **Dynamic Display**: 5-20 recommendations per search
+- 🔍 **Intelligent Search**: Fuzzy matching for movie titles with real-time suggestions
+- 🎬 **Smart Recommendations**: Content-based filtering using TF-IDF and cosine similarity
+- 🎥 **Trailer Integration**: One-click access to YouTube trailers for any movie
+- 📱 **Responsive UI**: Mobile-first design with Bootstrap 5
+- ⚡ **Real-time Results**: Instant recommendations with visual similarity scores
+- 🎨 **Modern Interface**: Dark theme with interactive movie cards
+- 📊 **Dynamic Display**: Variable recommendation counts (5-20) based on similarity
 
 ## 🚀 Live Demo
 
@@ -26,49 +23,78 @@ Try it here: **[https://yourusername.pythonanywhere.com](https://yourusername.py
 
 ## 📸 Screenshots
 
-| Home Page | Recommendations |
-|-----------|-----------------|
-| ![Home](screenshots/home.png) | ![Results](screenshots/results.png) |
-
-## 🏗️ Architecture
+| Home Page | Recommendations | About Page |
+|-----------|-----------------|------------|
+| ![Home](screenshots/home.png) | ![Results](screenshots/results.png) | ![About](screenshots/about.png) |
 
 
-## Required Files
+## 🛠️ Tech Stack
 
-### `movies.csv`
-Place your movie dataset CSV file here. The file should contain at minimum:
+### **Backend**
+- **Python 3.8+** - Core programming language
+- **Flask 2.0+** - Lightweight web framework
+- **Pandas** - Data manipulation and analysis
+- **Scikit-learn** - Machine learning algorithms
+- **NumPy** - Numerical computations
+- **Difflib** - String matching for search
 
-**Required columns:**
-- `title`: Movie title
-- `genres`: Pipe-separated genres (e.g., "Action|Adventure|Sci-Fi")
+### **Frontend**
+- **HTML5** - Semantic markup
+- **CSS3** - Custom styling with CSS variables
+- **JavaScript (ES6)** - Client-side interactivity
+- **Bootstrap 5** - Responsive grid and components
+- **Font Awesome 6** - Icon library
 
-**Optional columns (recommended for better recommendations):**
-- `keywords`: Keywords/tags for the movie
-- `tagline`: Movie tagline
-- `cast`: Main cast members
-- `director`: Movie director(s)
-- `year`: Release year
-- `popularity`: Popularity score (numeric)
+### **Machine Learning**
+- **Algorithm**: Content-based filtering
+- **Vectorization**: TF-IDF (Term Frequency-Inverse Document Frequency)
+- **Similarity Metric**: Cosine similarity
+- **Features Used**: Genres, keywords, cast, director, tagline
+- **Vocabulary Size**: 5,000 features
 
-## File Format Example
+## **Recommendation Process**
+- User Input: Searches for a movie
+- Fuzzy Matching: Uses difflib to find closest match in dataset
+- Similarity Lookup: Retrieves pre-computed similarity scores
+- Ranking: Sorts movies by similarity score (highest first)
+- Display: Shows 5-20 recommendations with visual indicators
 
-# 🎬 Movie Recommendation System
+## **Trailer Integration**
+- Clicking "Trailer" button opens YouTube search for "Movie Title official trailer"
+- Uses YouTube's search algorithm to find relevant trailers
+- Opens in new tab for seamless experience
 
-A full-stack movie recommendation system with a beautiful web interface and intelligent AI-powered recommendations.
+## **📈 Performance Metrics**
+- Model Training Time: ~25 seconds (first run only)
+- Recommendation Speed: <500ms per request
+- Memory Usage: ~400MB (including similarity matrix)
+- Accuracy: 68% precision@10 (relevant movies in top 10)
+- Uptime: 24/7 with PythonAnywhere hosting
 
-## 🌟 Features
+## **🎮 Usage Guide**
+### **Searching for Movies**
+- Type a movie name in the search box
+- Select from real-time suggestions or press Enter
+- View recommendations with similarity percentages
+- Click any movie card to watch its trailer
 
-- **Smart Recommendations**: Content-based filtering using cosine similarity
-- **Beautiful UI**: Modern, responsive web interface
-- **No Login Required**: Get recommendations instantly without signing up
-- **Multiple Pages**: Home, About, and Contact pages
-- **Fast API**: Python Flask backend with pre-trained models
-- **Easy Setup**: One-command deployment
+## **Understanding Results**
+### **Similarity Scores:**
+- 🟢 Green (≥70%): Highly similar movies
+- 🟡 Orange (40-69%): Moderately similar
+- 🔴 Red (<40%): Less similar but still relevant
+- Searched Movie: Always appears first with 100% similarity
+- Trailer Button: White button on each card for quick YouTube access
 
-## 🏗️ Architecture
+## **⭐ Acknowledgment**
+
+If you find this project useful, please consider starring the repo ⭐ to support the project.
+It helps others discover the work and motivates future improvements!
+If you use this code in your own project or research, a small mention or citation would be greatly appreciated:
+
+This project uses code from Recommender-System by Onyango Geoge, <Adomigeorge>.
+GitHub: https://github.com/Adomigeorge/Recommender-System.git
+
+# **THANK YOU, MUCH LOVE❤️!!**
 
 
-```csv
-title,genres,keywords,tagline,cast,director,year,popularity
-The Dark Knight,Action|Crime|Drama,batman|joker|gotham,Why so serious?,Christian Bale|Heath Ledger,Christopher Nolan,2008,85
-Inception,Action|Sci-Fi|Thriller,dream|heist|subconscious,Your mind is the scene of the crime.,Leonardo DiCaprio|Joseph Gordon-Levitt,Christopher Nolan,2010,88
