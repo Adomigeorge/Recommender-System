@@ -2,9 +2,40 @@
 
 This directory should contain your movie dataset file.
 
+# 🎬 Movie Recommendation System
+
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://python.org)
+[![Flask](https://img.shields.io/badge/Flask-2.0%2B-green)](https://flask.palletsprojects.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://yourusername.pythonanywhere.com)
+
+A content-based movie recommendation system that suggests similar movies based on genres, keywords, cast, director, and taglines.
+
+## ✨ Features
+
+- 🔍 **Intelligent Search**: Fuzzy matching for movie titles
+- 🎬 **Smart Recommendations**: Content-based filtering using ML
+- 📱 **Responsive UI**: Works on all devices
+- ⚡ **Real-time Results**: Instant recommendations
+- 🎨 **Visual Feedback**: Color-coded similarity scores
+- 📊 **Dynamic Display**: 5-20 recommendations per search
+
+## 🚀 Live Demo
+
+Try it here: **[https://yourusername.pythonanywhere.com](https://yourusername.pythonanywhere.com)**
+
+## 📸 Screenshots
+
+| Home Page | Recommendations |
+|-----------|-----------------|
+| ![Home](screenshots/home.png) | ![Results](screenshots/results.png) |
+
+## 🏗️ Architecture
+
+
 ## Required Files
 
-### `movies.csv` (Recommended)
+### `movies.csv`
 Place your movie dataset CSV file here. The file should contain at minimum:
 
 **Required columns:**
