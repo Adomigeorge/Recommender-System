@@ -17,15 +17,9 @@ A content-based movie recommendation system that suggests similar movies based o
 - 🎨 **Modern Interface**: Dark theme with interactive movie cards
 - 📊 **Dynamic Display**: Variable recommendation counts (5-20) based on similarity
 
-## 🚀 Live Demo
+## 🚀 Live Access
 
-Try it here: **[https://yourusername.pythonanywhere.com](https://yourusername.pythonanywhere.com)**
-
-## 📸 Screenshots
-
-| Home Page | Recommendations | About Page |
-|-----------|-----------------|------------|
-| ![Home](screenshots/home.png) | ![Results](screenshots/results.png) | ![About](screenshots/about.png) |
+Try it here: **[https://adomigeorge.pythonanywhere.com](https://adomigeorge.pythonanywhere.com)**
 
 
 ## 🛠️ Tech Stack
@@ -83,8 +77,8 @@ Try it here: **[https://yourusername.pythonanywhere.com](https://yourusername.py
 - 🟢 Green (≥70%): Highly similar movies
 - 🟡 Orange (40-69%): Moderately similar
 - 🔴 Red (<40%): Less similar but still relevant
-- Searched Movie: Always appears first with 100% similarity
-- Trailer Button: White button on each card for quick YouTube access
+Searched Movie: Always appears first with 100% similarity
+Trailer Button: White button on each card for quick YouTube access
 
 ## **⭐ Acknowledgment**
 
@@ -95,6 +89,6 @@ If you use this code in your own project or research, a small mention or citatio
 This project uses code from Recommender-System by Onyango Geoge, <Adomigeorge>.
 GitHub: https://github.com/Adomigeorge/Recommender-System.git
 
-# **THANK YOU, MUCH LOVE❤️!!**
+## **THANK YOU, MUCH LOVE❤️!!**
 
 
