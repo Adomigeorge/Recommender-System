@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 Movie Recommendation System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #0f4c75;
+            --highlight-color: #00b7c2;
+            --text-color: #e6e6e6;
+            --card-bg: #222831;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-color);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--highlight-color);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .nav-tabs {
+            border-bottom: none;
+            margin-bottom: 1rem;
+        }
+        
+        .nav-tabs .nav-link {
+            color: var(--text-color);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 8px;
+            margin-right: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            background: rgba(0, 183, 194, 0.2);
+            color: var(--highlight-color);
+        }
+        
+        .nav-tabs .nav-link.active {
+            background: var(--highlight-color);
+            color: white;
+            border: none;
+        }
+        
+        .movie-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 183, 194, 0.2);
+            border-color: var(--highlight-color);
+        }
+        
+        .movie-poster {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--highlight-color);
+            font-size: 3rem;
+        }
+        
+        .movie-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: white;
+            line-height: 1.3;
+            height: 2.6em;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .movie-meta {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-bottom: 0.5rem;
+        }
+        
+        .similarity-badge {
+            background: rgba(0, 183, 194, 0.2);
+            color: var(--highlight-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(0, 183, 194, 0.3);
+        }
+        
+        .searched-movie-card {
+            background: var(--card-bg) !important; /* Same as others */
+            border: 1px solid var(--highlight-color) !important;
+            box-shadow: 0 5px 15px rgba(0, 183, 194, 0.2) !important;
+        }
+
+        .trailer-btn {
+    background: transparent !important;
+    border: 1.5px solid white !important;
+    color: white !important;
+    padding: 0.25rem 0.75rem !important;
+    font-size: 0.7rem !important;
+    border-radius: 20px !important;
+    transition: all 0.3s ease !important;
+}
+
+.play-overlay i {
+    background: white;
+    color: var(--highlight-color);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5px;
+}
+
+.play-overlay:hover i {
+    background: var(--highlight-color);
+    color: white;
+}
+
+    .searched-movie-indicator {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: var(--highlight-color);
+        color: white;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: bold;
+    }
+        
+        .searched-movie-card .movie-title {
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .searched-movie-card .similarity-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-color: white;
+        }
+        
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .search-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+        }
+        
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--highlight-color);
+            box-shadow: 0 0 0 0.25rem rgba(0, 183, 194, 0.25);
+            color: white;
+        }
+        
+        .search-btn {
+            background: var(--highlight-color);
+            border: none;
+            border-radius: 50px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            background: #00a3ad;
+            transform: translateY(-2px);
+        }
+        
+        .stats-badge {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .loading-spinner {
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.25em;
+        }
+        
+        .suggestions-list {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 0.5rem;
+        }
+        
+        .suggestion-item {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .suggestion-item:hover {
+            background: rgba(0, 183, 194, 0.1);
+            color: var(--highlight-color);
+        }
+        
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+        
+        .no-results {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .recommendations-count {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .movie-poster {
+                height: 150px;
+            }
+            
+            .movie-title {
+                font-size: 0.9rem;
+            }
+            
+            .search-input {
+                font-size: 1rem;
+                padding: 0.75rem 1.25rem;
+            }
+        }
+        
+        .movie-card-sm {
+            padding: 0.75rem;
+        }
+        
+        .movie-card-sm .movie-poster {
+            height: 140px;
+            font-size: 2rem;
+        }
+        
+        .movie-card-sm .movie-title {
+            font-size: 0.85rem;
+            height: 2.4em;
+        }
+        
+        .movie-card-sm .movie-meta {
+            font-size: 0.8rem;
+        }
+        
+        .movie-card-sm .similarity-badge {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+        }
+        
+        .tab-content {
+            min-height: 400px;
+        }
+        
+        .tab-pane {
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .feature-icon {
+            color: var(--highlight-color);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-info-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-info-icon {
+            background: var(--highlight-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <div class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-5 mb-2">
+                        <i class="fas fa-film me-2"></i>Movie Recommendation System
+                    </h1>
+                    <p class="lead mb-0" style="color: #aaa;">
+                        Discover movies similar to your favorites
+                    </p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="stats-badge d-inline-block">
+                        <i class="fas fa-database me-1"></i>
+                        <span id="total-movies">Loading...</span> movies
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation Tabs -->
+            <div class="row mt-3">
+                <div class="col">
+                    <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" 
+                                    data-bs-target="#home" type="button" role="tab">
+                                <i class="fas fa-home me-2"></i>Home
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="about-tab" data-bs-toggle="tab" 
+                                    data-bs-target="#about" type="button" role="tab">
+                                <i class="fas fa-info-circle me-2"></i>About
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" 
+                                    data-bs-target="#contact" type="button" role="tab">
+                                <i class="fas fa-envelope me-2"></i>Contact
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="tab-content" id="nav-tabContent">
+            <!-- Home Tab -->
+            <div class="tab-pane fade show active" id="home" role="tabpanel">
+                <!-- Search Section -->
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-8">
+                        <div class="search-box">
+                            <form id="movie-form">
+                                <div class="input-group">
+                                    <input type="text" 
+                                           class="form-control search-input" 
+                                           id="movie-name" 
+                                           placeholder="Enter a movie name (e.g., The Dark Knight, Inception, Titanic...)" 
+                                           autocomplete="off"
+                                           required>
+                                    <button class="btn search-btn" type="submit">
+                                        <i class="fas fa-search me-2"></i>Find Similar
+                                    </button>
+                                </div>
+                                <div id="suggestions" class="suggestions-list d-none"></div>
+                            </form>
+                            
+                            <div class="mt-3">
+                                <p class="text-muted mb-1">
+                                    <i class="fas fa-lightbulb me-1"></i> 
+                                    <small>Try: <span class="text-highlight">The Dark Knight, Inception, Titanic, Toy Story, Avengers</span></small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div id="results">
+                    <div class="text-center py-5">
+                        <div class="mb-3">
+                            <i class="fas fa-search fa-3x" style="color: var(--highlight-color); opacity: 0.5;"></i>
+                        </div>
+                        <h4 class="mb-3">Search for a movie to get recommendations</h4>
+                        <p class="text-muted">Enter a movie title above to find similar movies</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Tab (No inner card) -->
+            <div class="tab-pane fade" id="about" role="tabpanel">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <h3 class="mb-4" style="color: var(--highlight-color);">
+                            <i class="fas fa-info-circle me-2"></i>About This System
+                        </h3>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="feature-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <h5>How It Works</h5>
+                                <p class="text-muted">
+                                    Our system uses machine learning to analyze movie features including genres, 
+                                    keywords, cast, director, and plot elements. It calculates similarity scores 
+                                    to find movies that share common characteristics.
+                                </p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="feature-icon">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <h5>Our Database</h5>
+                                <p class="text-muted">
+                                    We have <strong><span id="about-movie-count">4803</span> movies</strong> 
+                                    in our database, including popular classics and recent releases.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <h5 class="mb-3">Features Used</h5>
+                        <div class="row">
+                            <div class="col-md-3 col-6 text-center mb-3">
+                                <div class="feature-icon">
+                                    <i class="fas fa-tags"></i>
+                                </div>
+                                <p class="mb-0">Genres</p>
+                            </div>
+                            <div class="col-md-3 col-6 text-center mb-3">
+                                <div class="feature-icon">
+                                    <i class="fas fa-key"></i>
+                                </div>
+                                <p class="mb-0">Keywords</p>
+                            </div>
+                            <div class="col-md-3 col-6 text-center mb-3">
+                                <div class="feature-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <p class="mb-0">Cast</p>
+                            </div>
+                            <div class="col-md-3 col-6 text-center mb-3">
+                                <div class="feature-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <p class="mb-0">Director</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Tab (No inner card) -->
+            <div class="tab-pane fade" id="contact" role="tabpanel">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <h3 class="mb-4" style="color: var(--highlight-color);">
+                            <i class="fas fa-envelope me-2"></i>Contact Us
+                        </h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <h5><i class="fas fa-map-marker-alt me-2"></i>Get In Touch</h5>
+                                <div class="contact-info-item d-flex">
+                                    <div class="contact-info-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Email</h6>
+                                        <p class="text-muted mb-0">support@movierecommender.com</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-info-item d-flex">
+                                    <div class="contact-info-icon">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Phone</h6>
+                                        <p class="text-muted mb-0">+1 (555) 123-4567</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-info-item d-flex">
+                                    <div class="contact-info-icon">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Hours</h6>
+                                        <p class="text-muted mb-0">Monday - Friday: 9AM - 6PM</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <form id="contact-form">
+                                    <div class="mb-3">
+                                        <label for="contact-name" class="form-label">Name</label>
+                                        <input type="text" class="form-control search-input" id="contact-name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="contact-email" class="form-label">Email</label>
+                                        <input type="email" class="form-control search-input" id="contact-email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="contact-message" class="form-label">Message</label>
+                                        <textarea class="form-control search-input" id="contact-message" rows="4" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn search-btn w-100">
+                                        <i class="fas fa-paper-plane me-2"></i>Send Message
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSystemStats();
+            setupSearchSuggestions();
+            
+            // Contact form handler
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for your message! We\'ll get back to you soon.');
+                    contactForm.reset();
+                });
+            }
+        });
+
+        function loadSystemStats() {
+            fetch('/debug')
+                .then(response => response.json())
+                .then(data => {
+                    const count = data.total_movies || '4803';
+                    document.getElementById('total-movies').textContent = count;
+                    document.getElementById('about-movie-count').textContent = count;
+                })
+                .catch(() => {
+                    document.getElementById('total-movies').textContent = '4803';
+                    document.getElementById('about-movie-count').textContent = '4803';
+                });
+        }
+
+        function setupSearchSuggestions() {
+            const searchInput = document.getElementById('movie-name');
+            const suggestionsDiv = document.getElementById('suggestions');
+            
+            if (!searchInput) return;
+            
+            searchInput.addEventListener('input', function() {
+                const query = this.value.trim();
+                
+                if (query.length < 2) {
+                    suggestionsDiv.classList.add('d-none');
+                    return;
+                }
+                
+                fetch('/movies')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success && data.movies) {
+                            const filteredMovies = data.movies.filter(movie =>
+                                movie.toLowerCase().includes(query.toLowerCase())
+                            ).slice(0, 8);
+                            
+                            if (filteredMovies.length > 0) {
+                                const suggestionsHtml = filteredMovies.map(movie => 
+                                    `<div class="suggestion-item" onclick="useSuggestion('${movie.replace(/'/g, "\\'")}')">
+                                        <i class="fas fa-film me-2" style="opacity: 0.6;"></i>${movie}
+                                    </div>`
+                                ).join('');
+                                
+                                suggestionsDiv.innerHTML = suggestionsHtml;
+                                suggestionsDiv.classList.remove('d-none');
+                            } else {
+                                suggestionsDiv.classList.add('d-none');
+                            }
+                        }
+                    })
+                    .catch(() => suggestionsDiv.classList.add('d-none'));
+            });
+            
+            document.addEventListener('click', function(event) {
+                if (!searchInput.contains(event.target) && !suggestionsDiv.contains(event.target)) {
+                    suggestionsDiv.classList.add('d-none');
+                }
+            });
+        }
+
+        function useSuggestion(movie) {
+            document.getElementById('movie-name').value = movie;
+            document.getElementById('suggestions').classList.add('d-none');
+            document.getElementById('movie-form').dispatchEvent(new Event('submit'));
+        }
+
+        // Handle form submission
+        document.getElementById('movie-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const movieInput = document.getElementById('movie-name');
+            const movieName = movieInput.value.trim();
+            
+            if (!movieName) {
+                showError('Please enter a movie name');
+                return;
+            }
+            
+            showLoading(movieName);
+            
+            fetch('/recommend', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ movie_name: movieName })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    displayResults(data);
+                } else {
+                    showError(data.message, data.suggestions);
+                }
+            })
+            .catch(error => {
+                showError('Error connecting to server. Please try again.');
+                console.error('Error:', error);
+            });
+        });
+
+        function showLoading(movieName) {
+            const resultsDiv = document.getElementById('results');
+            if (!resultsDiv) return;
+            
+            resultsDiv.innerHTML = `
+                <div class="text-center py-5">
+                    <div class="spinner-border loading-spinner text-highlight mb-3" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <h4 class="mb-2">Searching for "${movieName}"...</h4>
+                    <p class="text-muted">Finding similar movies in our database</p>
+                </div>
+            `;
+        }
+
+        // ✅ ADD THIS displayResults FUNCTION
+      function displayResults(data) {
+    const resultsDiv = document.getElementById('results');
+    if (!resultsDiv) return;
+    
+    const searchedTerm = data.searched;
+    const recommendations = data.recommendations || [];
+    const totalCount = recommendations.length;
+    
+    if (!data.success) {
+        resultsDiv.innerHTML = `
+            <div class="no-results">
+                <h4><i class="fas fa-exclamation-triangle me-2"></i>No Similar Movies Found</h4>
+                <p class="mb-3">${data.message || `No similar movies were found for "${searchedTerm}".`}</p>
+                ${data.suggestions && data.suggestions.length > 0 ? `
+                <div class="mt-3">
+                    <p class="mb-2">Try searching for these movies instead:</p>
+                    <div class="d-flex flex-wrap">
+                        ${data.suggestions.slice(0, 8).map(movie => 
+                            `<button class="btn btn-outline-highlight btn-sm me-2 mb-2" onclick="useSuggestion('${movie.replace(/'/g, "\\'")}')">
+                                ${movie}
+                            </button>`
+                        ).join('')}
+                    </div>
+                </div>
+                ` : ''}
+            </div>
+        `;
+        return;
+    }
+    
+    if (totalCount === 0) {
+        resultsDiv.innerHTML = `
+            <div class="no-results">
+                <h4><i class="fas fa-exclamation-triangle me-2"></i>No Recommendations Found</h4>
+                <p class="mb-3">No similar movies were found for "${searchedTerm}".</p>
+            </div>
+        `;
+        return;
+    }
+    
+    let cardsHtml = '';
+    
+    recommendations.forEach(movie => {
+        cardsHtml += createMovieCard(movie, movie.is_searched);
+    });
+    
+    const foundMovie = data.found || searchedTerm;
+    
+    // Show variable count badge
+    let countBadge = '';
+    if (totalCount < 10) {
+        countBadge = `<span class="badge bg-warning me-2">${totalCount} matches</span>`;
+    } else if (totalCount < 15) {
+        countBadge = `<span class="badge bg-primary me-2">${totalCount} matches</span>`;
+    } else {
+        countBadge = `<span class="badge bg-success me-2">${totalCount} matches</span>`;
+    }
+    
+    resultsDiv.innerHTML = `
+        <div class="row mb-4">
+            <div class="col">
+                <h3 class="mb-3">
+                    <i class="fas fa-star me-2" style="color: var(--highlight-color);"></i>
+                    Recommendations for "${searchedTerm}"
+                </h3>
+                <div class="recommendations-count">
+                    ${countBadge}
+                    ${foundMovie !== searchedTerm ? 
+                      `<span class="text-muted">(Searched for "${searchedTerm}", found "${foundMovie}")</span>` : 
+                      ''}
+                </div>
+            </div>
+        </div>
+        
+        <div class="row" id="movies-grid">
+            ${cardsHtml}
+        </div>
+    `;
+}
+
+        // ✅ ADD THIS createMovieCard FUNCTION
+function createMovieCard(movie, isSearched = false) {
+    const similarityPercent = Math.round(movie.similarity * 100);
+    const similarityColor = movie.similarity >= 0.7 ? '#00c853' : 
+                          movie.similarity >= 0.4 ? '#ff9800' : 
+                          '#ff5252';
+    
+    const iconClass = getMovieIcon(movie.title);
+    
+    return `
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+            <div class="movie-card movie-card-sm ${isSearched ? 'searched-movie-card' : ''}"
+                 data-movie-title="${movie.title.replace(/"/g, '&quot;')}">
+                
+                <!-- Add indicator badge for searched movie -->
+                ${isSearched ? '<div class="searched-movie-indicator"><i class="fas fa-search me-1"></i>Your Search</div>' : ''}
+                
+                <!-- Poster with play overlay -->
+                <div class="movie-poster" data-action="trailer">
+                    <i class="${iconClass}"></i>
+                    <div class="play-overlay">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                
+                <!-- Movie title -->
+                <h6 class="movie-title" title="${movie.title}">
+                    ${movie.title}
+                </h6>
+                
+                <!-- Director -->
+                ${movie.director ? `
+                <div class="movie-meta">
+                    <i class="fas fa-user me-1"></i>
+                    <small>${movie.director.length > 20 ? movie.director.substring(0, 20) + '...' : movie.director}</small>
+                </div>
+                ` : ''}
+                
+                <!-- Genres -->
+                ${movie.genres ? `
+                <div class="movie-meta">
+                    <i class="fas fa-tags me-1"></i>
+                    <small>${movie.genres.length > 25 ? movie.genres.substring(0, 25) + '...' : movie.genres}</small>
+                </div>
+                ` : ''}
+                
+                <!-- Bottom row with similarity and WHITE trailer button -->
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <span class="similarity-badge" style="border-color: ${similarityColor}; color: ${similarityColor}">
+                        <i class="fas fa-chart-line me-1"></i>
+                        ${similarityPercent}%
+                    </span>
+                    
+                    <!-- WHITE TRAILER BUTTON -->
+                    <button class="btn btn-sm trailer-btn" 
+                            data-action="trailer">
+                        <i class="fas fa-play me-1"></i>Trailer
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Single event listener for ALL trailer buttons (add this once)
+document.addEventListener('DOMContentLoaded', function() {
+    // Listen for clicks on trailer buttons or posters
+    document.addEventListener('click', function(event) {
+        // Check if clicked element or its parent has data-action="trailer"
+        const trailerElement = event.target.closest('[data-action="trailer"]');
+        
+        if (trailerElement) {
+            // Find the movie card containing this element
+            const movieCard = trailerElement.closest('.movie-card');
+            if (movieCard) {
+                // Get the movie title from data attribute
+                const movieTitle = movieCard.getAttribute('data-movie-title');
+                if (movieTitle) {
+                    // Open YouTube trailer search
+                    const searchQuery = encodeURIComponent(`${movieTitle} official trailer`);
+                    window.open(`https://www.youtube.com/results?search_query=${searchQuery}`, '_blank');
+                }
+            }
+        }
+    });
+});
+
+        // ✅getMovieIcon FUNCTION
+        function getMovieIcon(title) {
+            const titleLower = title.toLowerCase();
+            
+            if (titleLower.includes('action') || titleLower.includes('fight') || titleLower.includes('war')) {
+                return 'fas fa-explosion';
+            } else if (titleLower.includes('love') || titleLower.includes('romance') || titleLower.includes('heart')) {
+                return 'fas fa-heart';
+            } else if (titleLower.includes('comedy') || titleLower.includes('funny') || titleLower.includes('laugh')) {
+                return 'fas fa-laugh';
+            } else if (titleLower.includes('horror') || titleLower.includes('scary') || titleLower.includes('ghost')) {
+                return 'fas fa-ghost';
+            } else if (titleLower.includes('sci') || titleLower.includes('space') || titleLower.includes('future')) {
+                return 'fas fa-rocket';
+            } else if (titleLower.includes('animation') || titleLower.includes('cartoon') || titleLower.includes('disney')) {
+                return 'fas fa-film';
+            } else if (titleLower.includes('drama') || titleLower.includes('story') || titleLower.includes('life')) {
+                return 'fas fa-theater-masks';
+            } else if (titleLower.includes('adventure') || titleLower.includes('journey') || titleLower.includes('quest')) {
+                return 'fas fa-map';
+            } else {
+                return 'fas fa-film';
+            }
+        }
+
+        // ✅ ADD THIS showError FUNCTION
+        function showError(message, suggestions = null) {
+            const resultsDiv = document.getElementById('results');
+            if (!resultsDiv) return;
+            
+            let suggestionsHtml = '';
+            if (suggestions && suggestions.length > 0) {
+                suggestionsHtml = `
+                    <div class="mt-3">
+                        <p class="mb-2">Try one of these:</p>
+                        <div class="d-flex flex-wrap">
+                            ${suggestions.slice(0, 6).map(movie => 
+                                `<button class="btn btn-outline-highlight btn-sm me-2 mb-2" onclick="useSuggestion('${movie.replace(/'/g, "\\'")}')">
+                                    ${movie}
+                                </button>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            resultsDiv.innerHTML = `
+                <div class="no-results">
+                    <h4><i class="fas fa-exclamation-circle me-2"></i>${message}</h4>
+                    ${suggestionsHtml}
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

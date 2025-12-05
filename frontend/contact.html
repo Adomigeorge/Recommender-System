@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - MovieRec</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .contact-hero {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: rgb(31, 18, 18);
+            padding: 0.5rem 1rem;
+            text-align: center;
+        }
+        
+        .contact-content {
+            padding: 4rem 0;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 2rem;
+        }
+        
+        .contact-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .contact-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        
+        .contact-info-item:hover {
+            transform: translateY(-3px);
+            background: #e3f2fd;
+        }
+        
+        .contact-info-item i {
+            font-size: 1.5rem;
+            color: #3498db;
+            margin-top: 0.25rem;
+            width: 24px;
+        }
+        
+        .contact-info-item h3 {
+            margin: 0 0 0.5rem 0;
+            color: #2c3e50;
+        }
+        
+        .contact-info-item p {
+            margin: 0;
+            color: #666;
+        }
+        
+        .social-links {
+            margin-top: 2rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            transform: translateY(-3px);
+        }
+        
+        .fa-facebook:hover { background: #3b5998; }
+        .fa-twitter:hover { background: #1da1f2; }
+        .fa-instagram:hover { background: #e1306c; }
+        .fa-linkedin:hover { background: #0077b5; }
+        .fa-github:hover { background: #333; }
+        
+        .faq-section {
+            margin-top: 4rem;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+        }
+        
+        .faq-question i {
+            transition: transform 0.3s;
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding: 1.5rem;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <div class="logo-img">🎬</div>
+                    <span class="logo-text">MovieRec</span>
+                </a>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+            
+            <div class="nav-auth">
+                <button class="btn-signin" id="signinBtn">
+                    <i class="fas fa-user"></i> Sign In
+                </button>
+                <button class="btn-signup" id="signupBtn">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
+            </div>
+            
+            <button class="menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <section class="contact-hero">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <p>We'd love to hear from you. Get in touch with our team.</p>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <section class="contact-content">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h2><i class="fas fa-paper-plane"></i> Send us a Message</h2>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="contactName"><i class="fas fa-user"></i> Name</label>
+                                <input type="text" id="contactName" placeholder="Your name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contactEmail"><i class="fas fa-envelope"></i> Email</label>
+                                <input type="email" id="contactEmail" placeholder="you@example.com" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contactSubject"><i class="fas fa-tag"></i> Subject</label>
+                                <input type="text" id="contactSubject" placeholder="How can we help?" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contactMessage"><i class="fas fa-comment"></i> Message</label>
+                                <textarea id="contactMessage" rows="6" placeholder="Tell us about your inquiry..." required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn-submit">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <h2><i class="fas fa-address-book"></i> Contact Information</h2>
+                        
+                        <div class="contact-info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h3>Email</h3>
+                                <p>support@movierec.com</p>
+                                <p>feedback@movierec.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h3>Phone</h3>
+                                <p>+1 (555) 123-4567 (Support)</p>
+                                <p>+1 (555) 987-6543 (General)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h3>Address</h3>
+                                <p>123 Movie Street</p>
+                                <p>Hollywood, CA 90210</p>
+                                <p>United States</p>
+                            </div>
+                        </div>
+                        
+                        <div class="social-links">
+                            <h3>Follow & Connect</h3>
+                            <div class="social-icons">
+                                <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-section">
+                    <h2><i class="fas fa-question-circle"></i> Frequently Asked Questions</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How does the recommendation system work?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Our system uses content-based filtering with cosine similarity. It analyzes movie features (genres, cast, keywords, etc.) to find movies similar to your input.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Do I need to create an account?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            No! You can get recommendations without signing up. Accounts are optional for saving preferences.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How many movies are in your database?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            We currently have thousands of movies in our database, with new ones added regularly.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Can I suggest a movie to add?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Absolutely! Use the contact form above to suggest movies you'd like to see in our database.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="logo-img">🎬</div>
+                <span class="logo-text">MovieRec</span>
+            </div>
+            <p>Smart movie recommendations powered by AI</p>
+            <div class="footer-links">
+                <a href="index.html">Home</a> | 
+                <a href="about.html">About</a> | 
+                <a href="contact.html">Contact</a>
+            </div>
+            <p class="copyright">&copy; 2024 Movie Recommendation System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // FAQ functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+        
+        // Contact form submission
+        document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! We\'ll get back to you soon.');
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>
