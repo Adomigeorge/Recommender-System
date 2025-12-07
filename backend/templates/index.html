@@ -22,7 +22,8 @@
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
+
         .header {
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
@@ -399,11 +400,11 @@
                                     <input type="text" 
                                            class="form-control search-input" 
                                            id="movie-name" 
-                                           placeholder="Enter a movie name (e.g., The Dark Knight, Inception, Titanic...)" 
+                                           placeholder="Enter a movie name (e.g., The Dark Knight,...)" 
                                            autocomplete="off"
                                            required>
                                     <button class="btn search-btn" type="submit">
-                                        <i class="fas fa-search me-2"></i>Find Similar
+                                        <i class="fas fa-search me-2"></i>Search
                                     </button>
                                 </div>
                                 <div id="suggestions" class="suggestions-list d-none"></div>
@@ -426,7 +427,7 @@
                             <i class="fas fa-search fa-3x" style="color: var(--highlight-color); opacity: 0.5;"></i>
                         </div>
                         <h4 class="mb-3">Search for a movie to get recommendations</h4>
-                        <p class="text-muted">Enter a movie title above to find similar movies</p>
+                        <p class="text-muted">Enter a movie title above to find it or similar movies</p>
                     </div>
                 </div>
             </div>
@@ -441,24 +442,46 @@
                         
                         <div class="row mb-4">
                             <div class="col-md-6 mb-3">
-                                <div class="feature-icon">
-                                    <i class="fas fa-brain"></i>
-                                </div>
-                                <h5>How It Works</h5>
+                                    <h5>How It Works</h5>
+                                    <p class="text-muted">
+                                        Our movie recommendation system is powered by machine learning and is designed 
+                                        to help users discover movies they will enjoy. The system works by analyzing 
+                                        a variety of movie features, including:
+                                    </p>
+                                    <ul class="text-muted">
+                                        <li>Genres (action, comedy, drama, etc.)</li>
+                                        <li>Keywords (themes, moods, or plot elements)</li>
+                                        <li>Cast and crew (actors, directors, and other key contributors)</li>
+                                    </ul>
+
+                                <h5>About the Creators</h5>
                                 <p class="text-muted">
-                                    Our system uses machine learning to analyze movie features including genres, 
-                                    keywords, cast, director, and plot elements. It calculates similarity scores 
-                                    to find movies that share common characteristics.
+                                    This project was developed by AG, MK alongside other team members, 
+                                    combining 
+                                    expertise in machine learning, data analysis, and software development. 
+                                    The system is open-source and encourages collaboration, allowing other 
+                                    developers to contribute to improving the recommendation 
+                                    algorithms or adding new datasets.
                                 </p>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <div class="feature-icon">
-                                    <i class="fas fa-database"></i>
-                                </div>
                                 <h5>Our Database</h5>
                                 <p class="text-muted">
                                     We have <strong><span id="about-movie-count">4803</span> movies</strong> 
                                     in our database, including popular classics and recent releases.
+                                    The movie data is sourced from publicly available datasets, 
+                                    ensuring a diverse range of films across different genres and eras.
+                                </p>
+
+                                <h5>Special Thanks</h5>
+                                <p class="text-muted">
+                                    A huge shoutout to everyone for their hard work on this project. 
+                                    I am so grateful to have you on my team!.
+                                    I wanted to take a moment to express my sincere gratitude for Mr. Anthony Njina 
+                                    for his outstanding 
+                                    efforts and dedication, feeding us with knowledge that enabled us to 
+                                    to do this project.
+
                                 </p>
                             </div>
                         </div>
@@ -511,7 +534,10 @@
                                     </div>
                                     <div>
                                         <h6>Email</h6>
-                                        <p class="text-muted mb-0">support@movierecommender.com</p>
+                                        <p class="text-muted mb-0">
+                                            adomigeorge@gmail.com<br>                                             
+                                            kiryamelcky@gmail.com
+                                        </p>
                                     </div>
                                 </div>
                                 
@@ -521,7 +547,7 @@
                                     </div>
                                     <div>
                                         <h6>Phone</h6>
-                                        <p class="text-muted mb-0">+1 (555) 123-4567</p>
+                                        <p class="text-muted mb-0">+254 745 391 397</p>
                                     </div>
                                 </div>
                                 
@@ -531,7 +557,7 @@
                                     </div>
                                     <div>
                                         <h6>Hours</h6>
-                                        <p class="text-muted mb-0">Monday - Friday: 9AM - 6PM</p>
+                                        <p class="text-muted mb-0">Available during the weekends, 24/7</p>
                                     </div>
                                 </div>
                             </div>
