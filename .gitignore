@@ -208,7 +208,7 @@ cython_debug/
 *.csv
 *.h5
 *.pt
-*.model
+# *.model
 
 
 # Marimo
