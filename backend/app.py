@@ -8,6 +8,24 @@ import pickle
 import os
 from pathlib import Path
 import random 
+import joblib
+
+
+# Flask secret key
+SECRET_KEY = os.environ.get("SECRET_KEY", "mysecret123")
+
+# Paths to your pre-trained files
+MOVIES_DATA_PATH = os.environ.get("MOVIES_DATA_PATH", "models/movies_data.pkl")
+SIMILARITY_MATRIX_PATH = os.environ.get("SIMILARITY_MATRIX_PATH", "models/similarity_matrix.npy")
+VECTOR_PATH = os.environ.get("VECTORIZER_PATH", "models/vectorizer.pkl")
+FEATURES_PATH = os.environ.get("FEATURES_PATH", "models/combined_features.pkl")
+
+# Load models/data
+movies_data = joblib.load(MOVIES_DATA_PATH)
+similarity_matrix = np.load(SIMILARITY_MATRIX_PATH)
+vectorizer = joblib.load(VECTOR_PATH)
+combined_features = joblib.load(FEATURES_PATH)
+
 
 app = Flask(__name__)
 
