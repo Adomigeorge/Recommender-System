@@ -14,8 +14,11 @@ import joblib
 # Flask secret key
 SECRET_KEY = os.environ.get("SECRET_KEY", "mysecret123")
 
+BASE = os.path.dirname(os.path.abspath(__file__))
+
 # Paths to your pre-trained files
 MOVIES_DATA_PATH = os.environ.get("MOVIES_DATA_PATH", "backend/models/movies_data.pkl")
+MOVIES_CSV_PATH = os.path.join(BASE, "backend/data/movies.csv")
 SIMILARITY_MATRIX_PATH = os.environ.get("SIMILARITY_MATRIX_PATH", "backend/models/similarity_matrix.npy")
 VECTOR_PATH = os.environ.get("VECTORIZER_PATH", "backend/models/vectorizer.pkl")
 FEATURES_PATH = os.environ.get("FEATURES_PATH", "backend/models/combined_features.pkl")
